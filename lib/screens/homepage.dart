@@ -1,6 +1,6 @@
 import 'package:cheeky_chewer/components/shimmer_widget.dart';
 import 'package:cheeky_chewer/models/recipe_data.dart';
-import 'package:cheeky_chewer/screens/search.dart';
+import 'package:cheeky_chewer/screens/recipe_data_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -202,35 +202,12 @@ class _HomepageState extends State<Homepage> {
                 TextField(
                   readOnly: true,
                   onTap: () {
-                    Navigator.pushNamed(context, Search.id);
+                    showSearch(
+                      delegate: RecipeDataSearch(),
+                      context: context,
+                    );
                   },
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      FontAwesomeIcons.search,
-                      color: Colors.black,
-                    ),
-                    isDense: true,
-                    fillColor: KSearchColor,
-                    filled: true,
-                    hintText: 'Search',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: KSearchColor, width: 1.0),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          15,
-                        ),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: KSearchColor, width: 1.0),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          15,
-                        ),
-                      ),
-                    ),
-                  ),
+                  decoration: KSearchDecoration,
                 ),
                 SizedBox(
                   height: sizedBoxHeight,
