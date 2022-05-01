@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const KSmaller = SizedBox(
   height: 20,
@@ -43,3 +44,31 @@ const KRichStyleUnderline = TextStyle(
 const KScaffoldBackground = Color(0xffFFF8EC);
 const KSearchColor = Color(0xffEFEEEE);
 const KAppColorTheme = Color(0xffFFF8EC);
+
+const KSearchDecoration = InputDecoration(
+  border: InputBorder.none,
+  prefixIcon: Icon(
+    FontAwesomeIcons.search,
+    color: Colors.black,
+  ),
+  isDense: true,
+  fillColor: KSearchColor,
+  filled: true,
+  hintText: 'Search',
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: KSearchColor, width: 1.0),
+    borderRadius: BorderRadius.all(
+      Radius.circular(
+        15,
+      ),
+    ),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: KSearchColor, width: 1.0),
+    borderRadius: BorderRadius.all(
+      Radius.circular(
+        15,
+      ),
+    ),
+  ),
+);
