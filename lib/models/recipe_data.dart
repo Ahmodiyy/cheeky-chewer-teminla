@@ -6,11 +6,18 @@ import '../utilities/functions.dart';
 class RecipeData {
   static FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
-  static Future<QuerySnapshot> getRecipe(BuildContext context) async {
+  static Future<QuerySnapshot> getRecipeCollection(BuildContext context) async {
     QuerySnapshot querySnapshot =
         await _cloudStore.collection('Recipe').get().catchError((e) {
       showErrorMsg(context, e.toString());
     });
     return querySnapshot;
+  }
+
+  getRecipeForSearch(BuildContext context) async {
+    await _cloudStore
+        .collection('Recipe')
+        .snapshots()
+        .map((event) => event.docs.toList());
   }
 }
