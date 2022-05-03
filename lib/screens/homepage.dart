@@ -1,6 +1,6 @@
 import 'package:cheeky_chewer/components/shimmer_widget.dart';
 import 'package:cheeky_chewer/models/recipe_data.dart';
-import 'package:cheeky_chewer/screens/recipe_data_search.dart';
+import 'package:cheeky_chewer/screens/search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -50,7 +50,7 @@ class _HomepageState extends State<Homepage> {
 
   void getData() {
     setState(() {
-      recipeData = RecipeData.getRecipe(context);
+      recipeData = RecipeData.getRecipeCollection(context);
     });
   }
 
@@ -202,10 +202,7 @@ class _HomepageState extends State<Homepage> {
                 TextField(
                   readOnly: true,
                   onTap: () {
-                    showSearch(
-                      delegate: RecipeDataSearch(),
-                      context: context,
-                    );
+                    Navigator.pushNamed(context, Search.id);
                   },
                   decoration: KSearchDecoration,
                 ),
