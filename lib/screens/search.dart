@@ -15,7 +15,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  late Future<QuerySnapshot> recipeData;
+  late Future<QuerySnapshot<Map<String, dynamic>>> recipeData;
 
   @override
   void initState() {
@@ -87,15 +87,16 @@ class _SearchState extends State<Search> {
                   child: FutureBuilder(
                     future: recipeData,
                     builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const Center(
                             child: Text('something went wrong'),
                           );
                         }
-                        List<QueryDocumentSnapshot> docs = snapshot.data!.docs;
-
+                        List<QueryDocumentSnapshot<Map<String, dynamic>>> docs =
+                            snapshot.data!.docs;
                         return StaggeredGridView.countBuilder(
                           itemCount: docs.length,
                           crossAxisCount: 2,

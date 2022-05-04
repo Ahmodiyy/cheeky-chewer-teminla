@@ -25,7 +25,7 @@ class _HomepageState extends State<Homepage> {
   bool isAppbarHeightReduce = false;
   double appbarHeight = 200;
   static const double sizedBoxHeight = 10;
-  late Future<QuerySnapshot> recipeData;
+  late Future<QuerySnapshot<Map<String, dynamic>>> recipeData;
 
   @override
   void initState() {
@@ -126,14 +126,16 @@ class _HomepageState extends State<Homepage> {
                   child: FutureBuilder(
                     future: recipeData,
                     builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasError) {
                           return const Center(
                             child: Text('something went wrong'),
                           );
                         }
-                        List<QueryDocumentSnapshot> docs = snapshot.data!.docs;
+                        List<QueryDocumentSnapshot<Map<String, dynamic>>> docs =
+                            snapshot.data!.docs;
                         return SizedBox(
                           height: hoizontalListViewHeight,
                           child: ListView.separated(
@@ -217,15 +219,16 @@ class _HomepageState extends State<Homepage> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: FutureBuilder(
             future: recipeData,
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
                   return const Center(
                     child: Text('something went wrong'),
                   );
                 }
-                List<QueryDocumentSnapshot> docs = snapshot.data!.docs;
+                List<QueryDocumentSnapshot<Map<String, dynamic>>> docs =
+                    snapshot.data!.docs;
 
                 return StaggeredGridView.countBuilder(
                   controller: scrollController,
