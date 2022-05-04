@@ -29,13 +29,20 @@ class _SearchState extends State<Search> {
     });
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getSearchedRecipe(
+      String queryString) async {
+    return await RecipeData.getRecipeCollectionObject()
+        .where('Name', isEqualTo: queryString)
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 15,
+            horizontal: 20,
             vertical: 20,
           ),
           child: Column(
@@ -69,9 +76,7 @@ class _SearchState extends State<Search> {
                 decoration: KSearchDecoration,
                 onChanged: (value) {
                   setState(() {
-                    recipeData.asStream().map((event) => event.docs.where(
-                        (element) =>
-                            element.data()['Name'].toString().contains(value)));
+                    recipeData = getSearchedRecipe(value);
                   });
                 },
               ),
