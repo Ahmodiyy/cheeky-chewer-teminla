@@ -15,7 +15,7 @@ class RecipeData {
     return querySnapshot;
   }
 
-  getRecipeForSearch(BuildContext context) async {
-    //await _cloudStore.collection('Recipe').get().
+  static CollectionReference<Map<String, dynamic>> getRecipeCollectionObject() {
+    return _cloudStore.collection('Recipe');
   }
 }

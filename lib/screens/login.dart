@@ -136,8 +136,8 @@ class _LoginState extends State<Login> {
                         });
                         if (_formKey.currentState!.validate()) {
                           try {
-                            await Log()
-                                .login(context, email.text, password.text);
+                            await Log().login(context, email.text.trim(),
+                                password.text.trim());
                           } catch (e) {
                             showErrorMsg(context, e.toString());
                           }

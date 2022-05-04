@@ -19,6 +19,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final double homepagePadding = 20;
   double hoizontalListViewHeight = 200;
   late ScrollController scrollController;
   bool isScroll = true;
@@ -68,7 +69,7 @@ class _HomepageState extends State<Homepage> {
           preferredSize: Size.fromHeight(appbarHeight +
               hoizontalListViewHeight), // here the desired height
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: homepagePadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -216,7 +217,7 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: homepagePadding),
           child: FutureBuilder(
             future: recipeData,
             builder: (BuildContext context,

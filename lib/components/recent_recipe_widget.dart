@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../utilities/constants.dart';
+import 'ingredient_widget.dart';
 
 class RecentRecipe extends StatelessWidget {
   final String recipeImageUrl;
@@ -21,105 +22,114 @@ class RecentRecipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Color(0xffF7EEE3),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(recipeInfo),
-            ),
-          ),
-          Positioned(
-            bottom: 60,
-            left: 20,
-            child: Text(
-              recipeName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          Positioned(
-              bottom: 40,
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Ingredient();
+            });
+      },
+      child: Container(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 20,
               left: 20,
-              child: Row(
-                children: [
-                  Icon(
-                    FontAwesomeIcons.clock,
-                    size: 12,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '  $recipePeriod . ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  ),
-                  Text(
-                    recipeCategory,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              )),
-          Positioned(
-              bottom: 20,
-              right: 20,
               child: Container(
+                padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: KActionColor,
-                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xffF7EEE3),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 10,
+                child: Text(recipeInfo),
+              ),
+            ),
+            Positioned(
+              bottom: 60,
+              left: 20,
+              child: Text(
+                recipeName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
                 ),
+              ),
+            ),
+            Positioned(
+                bottom: 40,
+                left: 20,
                 child: Row(
-                  textBaseline: TextBaseline.alphabetic,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     Icon(
-                      FontAwesomeIcons.star,
-                      color: Colors.black,
+                      FontAwesomeIcons.clock,
                       size: 12,
-                    ),
-                    SizedBox(
-                      width: 10,
+                      color: Colors.white,
                     ),
                     Text(
-                      recipeRating,
+                      '  $recipePeriod . ',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      recipeCategory,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
                       ),
                     )
                   ],
-                ),
-              )),
-        ],
-      ),
-      width: 250,
-      height: 200,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        image: DecorationImage(
-          image: NetworkImage(recipeImageUrl),
-          fit: BoxFit.cover,
+                )),
+            Positioned(
+                bottom: 20,
+                right: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: KActionColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                  child: Row(
+                    textBaseline: TextBaseline.alphabetic,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.star,
+                        color: Colors.black,
+                        size: 12,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        recipeRating,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+          ],
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+        width: 250,
+        height: 200,
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            image: NetworkImage(recipeImageUrl),
+            fit: BoxFit.cover,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );

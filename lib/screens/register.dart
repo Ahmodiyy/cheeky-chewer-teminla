@@ -199,8 +199,8 @@ class _RegisterState extends State<Register> {
                           showSpinner = true;
                         });
                         if (_formKey.currentState!.validate()) {
-                          await Log()
-                              .register(context, _email.text, _password.text);
+                          await Log().register(context, _email.text.trim(),
+                              _password.text.trim());
                         }
                         setState(() {
                           showSpinner = false;
