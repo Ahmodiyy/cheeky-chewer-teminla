@@ -131,7 +131,7 @@ class Ingredient extends StatelessWidget {
                             'Ingredients',
                             style: TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
