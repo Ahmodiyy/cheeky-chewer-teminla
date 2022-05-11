@@ -1,3 +1,5 @@
+import 'package:cheeky_chewer/components/rating_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -5,19 +7,10 @@ import '../utilities/constants.dart';
 import 'ingredient_widget.dart';
 
 class RecentRecipe extends StatelessWidget {
-  final String recipeImageUrl;
-  final String recipeName;
-  final String recipeInfo;
-  final String recipePeriod;
-  final String recipeRating;
-  final String recipeCategory;
+  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+
   const RecentRecipe({
-    required this.recipeImageUrl,
-    required this.recipeName,
-    required this.recipeInfo,
-    required this.recipePeriod,
-    required this.recipeRating,
-    required this.recipeCategory,
+    required this.document,
   });
 
   @override
@@ -27,7 +20,7 @@ class RecentRecipe extends StatelessWidget {
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Ingredient();
+              return Ingredient(document);
             });
       },
       child: Container(
@@ -42,14 +35,16 @@ class RecentRecipe extends StatelessWidget {
                   color: Color(0xffF7EEE3),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(recipeInfo),
+                child: Text(
+                  document.data()['Info'].toString(),
+                ),
               ),
             ),
             Positioned(
               bottom: 60,
               left: 20,
               child: Text(
-                recipeName,
+                document.data()['Name'].toString(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -67,14 +62,14 @@ class RecentRecipe extends StatelessWidget {
                       color: Colors.white,
                     ),
                     Text(
-                      '  $recipePeriod . ',
+                      '  ${document.data()['Duration'].toString()} . ',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,
                       ),
                     ),
                     Text(
-                      recipeCategory,
+                      document.data()['Category'].toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -83,40 +78,12 @@ class RecentRecipe extends StatelessWidget {
                   ],
                 )),
             Positioned(
-                bottom: 20,
-                right: 20,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: KActionColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 10,
-                  ),
-                  child: Row(
-                    textBaseline: TextBaseline.alphabetic,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.star,
-                        color: Colors.black,
-                        size: 12,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        recipeRating,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                )),
+              bottom: 20,
+              right: 20,
+              child: RatingWidget(
+                rating: document.data()['Rating'].toString(),
+              ),
+            ),
           ],
         ),
         width: 250,
@@ -124,7 +91,9 @@ class RecentRecipe extends StatelessWidget {
         decoration: ShapeDecoration(
           color: Colors.white,
           image: DecorationImage(
-            image: NetworkImage(recipeImageUrl),
+            image: NetworkImage(
+              document.data()['ImageUrl'].toString(),
+            ),
             fit: BoxFit.cover,
           ),
           shape: RoundedRectangleBorder(

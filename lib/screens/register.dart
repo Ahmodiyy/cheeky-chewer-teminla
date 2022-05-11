@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   TextEditingController _confirmPassword = TextEditingController();
-  bool showSpinner = false;
+  bool showSpinner = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TapGestureRecognizer _tapGestureRecognizer;
   late TapGestureRecognizer _tapGestureRecognizer2;
@@ -71,151 +71,149 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    KLarger,
-                    HeaderText(
-                      headerTextString: 'Create an \naccount',
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  constantLargerWhiteHorizontalSpacing,
+                  HeaderText(
+                    headerTextString: 'Create an \naccount',
+                  ),
+                  constantLargerWhiteHorizontalSpacing,
+                  TextFormField(
+                    controller: _email,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Email Address',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.user,
+                      ),
                     ),
-                    KLarger,
-                    TextFormField(
-                      controller: _email,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Email Address',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.user,
+                    validator: (value) {
+                      return validateEmail(value);
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: _password,
+                    obscureText: _obscureText,
+                    keyboardType: TextInputType.text,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Password',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.lock,
+                      ),
+                      suffixIcon: InkWell(
+                        onTap: togglePassword,
+                        child: Icon(
+                          _obscureText
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          size: 15.0,
+                          color: constantActionColor,
                         ),
                       ),
-                      validator: (value) {
-                        return validateEmail(value);
-                      },
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: _password,
-                      obscureText: _obscureText,
-                      keyboardType: TextInputType.text,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Password',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.lock,
-                        ),
-                        suffixIcon: InkWell(
-                          onTap: togglePassword,
-                          child: Icon(
-                            _obscureText
-                                ? FontAwesomeIcons.eye
-                                : FontAwesomeIcons.eyeSlash,
-                            size: 15.0,
-                            color: KActionColor,
-                          ),
+                    validator: (value) {
+                      return validatePassword(value);
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: _confirmPassword,
+                    obscureText: _obscureText2,
+                    keyboardType: TextInputType.text,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Confirm password',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.lock,
+                      ),
+                      suffixIcon: InkWell(
+                        onTap: togglePassword2,
+                        child: Icon(
+                          _obscureText2
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          size: 15.0,
+                          color: constantActionColor,
                         ),
                       ),
-                      validator: (value) {
-                        return validatePassword(value);
-                      },
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: _confirmPassword,
-                      obscureText: _obscureText2,
-                      keyboardType: TextInputType.text,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Confirm password',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.lock,
-                        ),
-                        suffixIcon: InkWell(
-                          onTap: togglePassword2,
-                          child: Icon(
-                            _obscureText2
-                                ? FontAwesomeIcons.eye
-                                : FontAwesomeIcons.eyeSlash,
-                            size: 15.0,
-                            color: KActionColor,
-                          ),
-                        ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm password';
+                      }
+                      if (_password.text != _confirmPassword.text) {
+                        return "Password does not match";
+                      }
+                      return null;
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'By clicking the ',
+                        style: constantRichStyle,
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please confirm password';
-                        }
-                        if (_password.text != _confirmPassword.text) {
-                          return "Password does not match";
-                        }
-                        return null;
-                      },
-                    ),
-                    KSmaller,
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: 'By clicking the ',
-                          style: KRichStyle,
-                        ),
-                        TextSpan(
-                          recognizer: _tapGestureRecognizer..onTap = () {},
-                          text: 'Sign Up ',
-                          style: KActionStyle,
-                        ),
-                        TextSpan(
-                          text: 'button, ',
-                          style: KRichStyle,
-                        ),
-                        TextSpan(
-                          text: 'you agree to our ',
-                          style: KRichStyle,
-                        ),
-                        TextSpan(
-                          recognizer: _tapGestureRecognizer2..onTap = () {},
-                          text: 'Terms & Condition ',
-                          style: KRichStyleUnderline,
-                        ),
-                        TextSpan(
-                          text: 'and ',
-                          style: KRichStyle,
-                        ),
-                        TextSpan(
-                          recognizer: _tapGestureRecognizer3..onTap = () {},
-                          text: 'Privacy Policy.',
-                          style: KRichStyleUnderline,
-                        ),
-                      ]),
-                    ),
-                    KSmaller,
-                    ActionButton(
-                      actionString: 'Sign up',
-                      action: () async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        if (_formKey.currentState!.validate()) {
-                          await Log().register(context, _email.text.trim(),
-                              _password.text.trim());
-                        }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      },
-                    ),
-                    KSmaller,
-                    RichTexts(
-                      suggestion: 'Already have an account? ',
-                      suggestionAction: 'Sign in',
-                      suggestionActionRoute: Login.id,
-                      tapGestureRecognizer: _tapGestureRecognizer4,
-                    ),
-                  ],
-                ),
+                      TextSpan(
+                        recognizer: _tapGestureRecognizer..onTap = () {},
+                        text: 'Sign Up ',
+                        style: constantActionStyle,
+                      ),
+                      TextSpan(
+                        text: 'button, ',
+                        style: constantRichStyle,
+                      ),
+                      TextSpan(
+                        text: 'you agree to our ',
+                        style: constantRichStyle,
+                      ),
+                      TextSpan(
+                        recognizer: _tapGestureRecognizer2..onTap = () {},
+                        text: 'Terms & Condition ',
+                        style: constantRichStyleUnderline,
+                      ),
+                      TextSpan(
+                        text: 'and ',
+                        style: constantRichStyle,
+                      ),
+                      TextSpan(
+                        recognizer: _tapGestureRecognizer3..onTap = () {},
+                        text: 'Privacy Policy.',
+                        style: constantRichStyleUnderline,
+                      ),
+                    ]),
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  ActionButton(
+                    dontHideActionText: showSpinner,
+                    actionString: 'Sign up',
+                    action: () async {
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        await Log().register(
+                            context, _email.text.trim(), _password.text.trim());
+                      }
+                      setState(() {
+                        showSpinner = true;
+                      });
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichTexts(
+                    suggestion: 'Already have an account? ',
+                    suggestionAction: 'Sign in',
+                    suggestionActionRoute: Login.id,
+                    tapGestureRecognizer: _tapGestureRecognizer4,
+                  ),
+                ],
               ),
             ),
           ),

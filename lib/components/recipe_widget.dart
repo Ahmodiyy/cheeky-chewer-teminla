@@ -1,23 +1,15 @@
+import 'package:cheeky_chewer/components/rating_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../utilities/constants.dart';
 import 'ingredient_widget.dart';
 
 class Recipe extends StatelessWidget {
-  final String recipeImageUrl;
-  final String recipeName;
-  final String recipeInfo;
-  final String recipePeriod;
-  final String recipeRating;
-  final String recipeCategory;
+  final QueryDocumentSnapshot<Map<String, dynamic>> document;
+
   const Recipe({
-    required this.recipeImageUrl,
-    required this.recipeName,
-    required this.recipeInfo,
-    required this.recipePeriod,
-    required this.recipeRating,
-    required this.recipeCategory,
+    required this.document,
   });
 
   @override
@@ -27,7 +19,7 @@ class Recipe extends StatelessWidget {
         showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Ingredient();
+              return Ingredient(document);
             });
       },
       child: Container(
@@ -41,7 +33,7 @@ class Recipe extends StatelessWidget {
                 color: Colors.grey.shade400,
                 image: DecorationImage(
                   image: NetworkImage(
-                    recipeImageUrl,
+                    document.data()['ImageUrl'].toString(),
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -60,7 +52,7 @@ class Recipe extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  recipePeriod,
+                  document.data()['Duration'].toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,
@@ -78,7 +70,7 @@ class Recipe extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  recipeCategory,
+                  document.data()['Category'].toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,
@@ -89,44 +81,17 @@ class Recipe extends StatelessWidget {
             Positioned(
               bottom: 50,
               right: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: KActionColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  textBaseline: TextBaseline.alphabetic,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.star,
-                      color: Colors.black,
-                      size: 12,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      recipeRating,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                ),
+              child: RatingWidget(
+                rating: document.data()['Rating'].toString(),
               ),
             ),
             Positioned(
               left: 10,
               bottom: 20,
               child: FittedBox(
-                child: Text(recipeName),
+                child: Text(
+                  document.data()['Name'].toString(),
+                ),
               ),
             ),
             Positioned(
@@ -134,7 +99,7 @@ class Recipe extends StatelessWidget {
               bottom: 5,
               child: FittedBox(
                 child: Text(
-                  recipeCategory,
+                  document.data()['Type'].toString(),
                   style: TextStyle(
                     fontSize: 10,
                     color: Color(0xffCBC5BC),

@@ -1,3 +1,4 @@
+import 'package:cheeky_chewer/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 void showErrorMsg(BuildContext context, String msg) {
@@ -54,5 +55,19 @@ DropdownMenuItem<String> listMenuItem(String value) {
   return DropdownMenuItem(
     value: value,
     child: Text(value),
+  );
+}
+
+Container returningRecipeInfoWidget(String recipeInfo) {
+  return Container(
+    decoration: BoxDecoration(
+      color: constantActionColor,
+      borderRadius: BorderRadius.circular(20),
+    ),
+    padding: EdgeInsets.symmetric(
+      vertical: 5,
+      horizontal: 10,
+    ),
+    child: Text(recipeInfo),
   );
 }
