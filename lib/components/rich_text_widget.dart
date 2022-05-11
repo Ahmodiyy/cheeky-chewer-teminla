@@ -22,7 +22,7 @@ class RichTexts extends StatelessWidget {
         text: TextSpan(children: [
           TextSpan(
             text: suggestion,
-            style: KRichStyle,
+            style: constantRichStyle,
           ),
           TextSpan(
             recognizer: tapGestureRecognizer
@@ -30,7 +30,7 @@ class RichTexts extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, suggestionActionRoute);
               },
             text: suggestionAction,
-            style: KRichStyleUnderline,
+            style: constantRichStyleUnderline,
           ),
         ]),
       ),

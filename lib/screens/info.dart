@@ -29,7 +29,7 @@ class _InfoState extends State<Info> {
     'Designer',
     'Artist',
   ];
-  bool showSpinner = false;
+  bool showSpinner = true;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TapGestureRecognizer _tapGestureRecognizer;
   TextEditingController name = TextEditingController();
@@ -67,156 +67,154 @@ class _InfoState extends State<Info> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    KLarger,
-                    HeaderText(
-                      headerTextString: 'Your\nInformation',
-                    ),
-                    KLarger,
-                    TextFormField(
-                      controller: name,
-                      keyboardType: TextInputType.name,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Name',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.user,
-                        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  constantLargerWhiteHorizontalSpacing,
+                  HeaderText(
+                    headerTextString: 'Your\nInformation',
+                  ),
+                  constantLargerWhiteHorizontalSpacing,
+                  TextFormField(
+                    controller: name,
+                    keyboardType: TextInputType.name,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Name',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.user,
                       ),
-                      validator: (value) {
-                        return validate(value);
-                      },
-                      onChanged: (value) {},
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: userName,
-                      keyboardType: TextInputType.name,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Username',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.lock,
-                        ),
+                    validator: (value) {
+                      return validate(value);
+                    },
+                    onChanged: (value) {},
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: userName,
+                    keyboardType: TextInputType.name,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Username',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.lock,
                       ),
-                      validator: (value) {
-                        return validate(value);
-                      },
-                      onChanged: (value) {},
                     ),
-                    KSmaller,
-                    DropdownButtonFormField(
-                      validator: (value) =>
-                          value == null ? 'field required' : null,
-                      decoration: KTextFieldDecoration.copyWith(
-                        border: InputBorder.none,
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.briefcase,
-                        ),
+                    validator: (value) {
+                      return validate(value);
+                    },
+                    onChanged: (value) {},
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  DropdownButtonFormField(
+                    validator: (value) =>
+                        value == null ? 'field required' : null,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      border: InputBorder.none,
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.briefcase,
                       ),
-                      icon: Icon(
-                        // Add this
-                        Icons.arrow_drop_down, // Add this
-                        color: KActionColor, // Add this
-                      ),
-                      hint: Text(
-                        'Profession',
-                      ),
-                      isExpanded: true,
-                      isDense: true,
-                      value: listValue,
-                      onChanged: (value) => setState(() {
-                        this.listValue = value.toString();
-                      }),
-                      items: professions
-                          .map((String val) => listMenuItem(val))
-                          .toList(),
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: url,
-                      keyboardType: TextInputType.url,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Profile URL',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.globe,
-                        ),
+                    icon: Icon(
+                      // Add this
+                      Icons.arrow_drop_down, // Add this
+                      color: constantActionColor, // Add this
+                    ),
+                    hint: Text(
+                      'Profession',
+                    ),
+                    isExpanded: true,
+                    isDense: true,
+                    value: listValue,
+                    onChanged: (value) => setState(() {
+                      this.listValue = value.toString();
+                    }),
+                    items: professions
+                        .map((String val) => listMenuItem(val))
+                        .toList(),
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: url,
+                    keyboardType: TextInputType.url,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Profile URL',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.globe,
                       ),
-                      validator: (value) {
-                        return validate(value);
-                      },
-                      onChanged: (value) {},
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: bio,
-                      keyboardType: TextInputType.text,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Bio',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.penSquare,
-                        ),
+                    validator: (value) {
+                      return validate(value);
+                    },
+                    onChanged: (value) {},
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: bio,
+                    keyboardType: TextInputType.text,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Bio',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.penSquare,
                       ),
-                      validator: (value) {
-                        return validate(value);
-                      },
-                      onChanged: (value) {},
                     ),
-                    KSmaller,
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: 'By clicking the ',
-                          style: KRichStyle,
-                        ),
-                        TextSpan(
-                          recognizer: _tapGestureRecognizer..onTap = () {},
-                          text: 'Finish ',
-                          style: KActionStyle,
-                        ),
-                        TextSpan(
-                          text:
-                              'button, you agree that all information here are valid',
-                          style: KRichStyle,
-                        ),
-                      ]),
-                    ),
-                    KSmaller,
-                    ActionButton(
-                      actionString: 'Finish',
-                      action: () async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        if (_formKey.currentState!.validate()) {
-                          try {
-                            await Log().loggingUserData(
-                                context,
-                                user!.email,
-                                name.text,
-                                userName.text,
-                                listValue!,
-                                url.text,
-                                bio.text);
-                          } catch (e) {
-                            showErrorMsg(context, e.toString());
-                          }
+                    validator: (value) {
+                      return validate(value);
+                    },
+                    onChanged: (value) {},
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: 'By clicking the ',
+                        style: constantRichStyle,
+                      ),
+                      TextSpan(
+                        recognizer: _tapGestureRecognizer..onTap = () {},
+                        text: 'Finish ',
+                        style: constantActionStyle,
+                      ),
+                      TextSpan(
+                        text:
+                            'button, you agree that all information here are valid',
+                        style: constantRichStyle,
+                      ),
+                    ]),
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  ActionButton(
+                    dontHideActionText: showSpinner,
+                    actionString: 'Finish',
+                    action: () async {
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          await Log().loggingUserData(
+                              context,
+                              user!.email,
+                              name.text,
+                              userName.text,
+                              listValue!,
+                              url.text,
+                              bio.text);
+                        } catch (e) {
+                          showErrorMsg(context, e.toString());
                         }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      },
-                    ),
-                    KSmaller,
-                  ],
-                ),
+                      }
+                      setState(() {
+                        showSpinner = true;
+                      });
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                ],
               ),
             ),
           ),

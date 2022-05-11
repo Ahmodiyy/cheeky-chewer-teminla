@@ -79,7 +79,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
           ),
         ),
         bottomSheet: Container(
-          color: KAppColorTheme,
+          color: constantAppColorTheme,
           height: 100,
           child: Center(
             child: Column(

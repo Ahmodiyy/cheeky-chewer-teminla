@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Cheeky Chewer',
       theme: ThemeData(
         appBarTheme: AppBarTheme(),
-        scaffoldBackgroundColor: KAppColorTheme,
+        scaffoldBackgroundColor: constantAppColorTheme,
       ),
       initialRoute: showHome ? Register.id : OnboardScreen.id,
       routes: {

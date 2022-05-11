@@ -92,7 +92,7 @@ class _HomepageState extends State<Homepage> {
                             width: 8,
                             padding: EdgeInsets.all(1),
                             decoration: new BoxDecoration(
-                              color: KActionColor,
+                              color: constantActionColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: new Text(
@@ -112,7 +112,7 @@ class _HomepageState extends State<Homepage> {
                       icon: Icon(
                         FontAwesomeIcons.plusCircle,
                       ),
-                      color: KActionColor,
+                      color: constantActionColor,
                     ),
                   ],
                 ),
@@ -143,30 +143,7 @@ class _HomepageState extends State<Homepage> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 return RecentRecipe(
-                                  recipeImageUrl: docs
-                                      .elementAt(index)
-                                      .data()['ImageUrl']
-                                      .toString(),
-                                  recipeName: docs
-                                      .elementAt(index)
-                                      .data()['Name']
-                                      .toString(),
-                                  recipeInfo: docs
-                                      .elementAt(index)
-                                      .data()['Info']
-                                      .toString(),
-                                  recipePeriod: docs
-                                      .elementAt(index)
-                                      .data()['Duration']
-                                      .toString(),
-                                  recipeRating: docs
-                                      .elementAt(index)
-                                      .data()['Rating']
-                                      .toString(),
-                                  recipeCategory: docs
-                                      .elementAt(index)
-                                      .data()['Category']
-                                      .toString(),
+                                  document: docs[index],
                                 );
                               },
                               separatorBuilder: (context, index) {
@@ -207,7 +184,7 @@ class _HomepageState extends State<Homepage> {
                   onTap: () {
                     Navigator.pushNamed(context, Search.id);
                   },
-                  decoration: KSearchDecoration,
+                  decoration: constantSearchDecoration,
                 ),
                 SizedBox(
                   height: sizedBoxHeight,
@@ -239,18 +216,7 @@ class _HomepageState extends State<Homepage> {
                   crossAxisSpacing: 10,
                   itemBuilder: (content, index) {
                     return Recipe(
-                      recipeImageUrl:
-                          docs.elementAt(index).data()['ImageUrl'].toString(),
-                      recipeName:
-                          docs.elementAt(index).data()['Name'].toString(),
-                      recipeInfo:
-                          docs.elementAt(index).data()['Info'].toString(),
-                      recipePeriod:
-                          docs.elementAt(index).data()['Duration'].toString(),
-                      recipeRating:
-                          docs.elementAt(index).data()['Rating'].toString(),
-                      recipeCategory:
-                          docs.elementAt(index).data()['Category'].toString(),
+                      document: docs[index],
                     );
                   },
                   staggeredTileBuilder: (index) =>

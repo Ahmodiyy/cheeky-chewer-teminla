@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const KSmaller = SizedBox(
+const constantSmallerHorizontalSpacing = SizedBox(
   height: 20,
 );
 
-const KLarger = SizedBox(
+const constantLargerWhiteHorizontalSpacing = SizedBox(
   height: 40,
 );
 
-const KTextFieldDecoration = InputDecoration(
+const constantTextFieldDecoration = InputDecoration(
   fillColor: Colors.white,
   filled: true,
   hintText: 'Enter',
@@ -27,36 +27,36 @@ const KTextFieldDecoration = InputDecoration(
   ),
 );
 
-const KActionStyle = TextStyle(
+const constantActionStyle = TextStyle(
   color: Color(0xffF6AB36),
 );
 
-const KActionColor = Color(0xffF6AB36);
+const constantActionColor = Color(0xffF6AB36);
 
-const KRichStyle = TextStyle(
+const constantRichStyle = TextStyle(
   color: Color(0xff8A8781),
 );
 
-const KRichStyleUnderline = TextStyle(
+const constantRichStyleUnderline = TextStyle(
   color: Color(0xffF6AB36),
   decoration: TextDecoration.underline,
 );
-const KScaffoldBackground = Color(0xffFFF8EC);
-const KSearchColor = Color(0xffEFEEEE);
-const KAppColorTheme = Color(0xffFFF8EC);
+const constantScaffoldBackgroundColor = Color(0xffFFF8EC);
+const constantSearchColor = Color(0xffEFEEEE);
+const constantAppColorTheme = Color(0xffFFF8EC);
 
-const KSearchDecoration = InputDecoration(
+const constantSearchDecoration = InputDecoration(
   border: InputBorder.none,
   prefixIcon: Icon(
     FontAwesomeIcons.search,
     color: Colors.black,
   ),
   isDense: true,
-  fillColor: KSearchColor,
+  fillColor: constantSearchColor,
   filled: true,
   hintText: 'Search',
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: KSearchColor, width: 1.0),
+    borderSide: BorderSide(color: constantSearchColor, width: 1.0),
     borderRadius: BorderRadius.all(
       Radius.circular(
         15,
@@ -64,11 +64,25 @@ const KSearchDecoration = InputDecoration(
     ),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: KSearchColor, width: 1.0),
+    borderSide: BorderSide(color: constantSearchColor, width: 1.0),
     borderRadius: BorderRadius.all(
       Radius.circular(
         15,
       ),
     ),
+  ),
+);
+
+const constantIngredientWhiteHorizontalSpacing = SizedBox(
+  height: 15,
+);
+
+const constantCurvedContainerBoxDecoration = BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(
+      20,
+    ),
+    topRight: Radius.circular(20),
   ),
 );

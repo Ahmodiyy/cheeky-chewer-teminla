@@ -73,7 +73,7 @@ class _SearchState extends State<Search> {
               ),
               TextField(
                 autofocus: true,
-                decoration: KSearchDecoration,
+                decoration: constantSearchDecoration,
                 onChanged: (value) {
                   setState(() {
                     recipeData = getSearchedRecipe(value);
@@ -109,30 +109,7 @@ class _SearchState extends State<Search> {
                           crossAxisSpacing: 10,
                           itemBuilder: (content, index) {
                             return Recipe(
-                              recipeImageUrl: docs
-                                  .elementAt(index)
-                                  .data()['ImageUrl']
-                                  .toString(),
-                              recipeName: docs
-                                  .elementAt(index)
-                                  .data()['Name']
-                                  .toString(),
-                              recipeInfo: docs
-                                  .elementAt(index)
-                                  .data()['Info']
-                                  .toString(),
-                              recipePeriod: docs
-                                  .elementAt(index)
-                                  .data()['Duration']
-                                  .toString(),
-                              recipeRating: docs
-                                  .elementAt(index)
-                                  .data()['Rating']
-                                  .toString(),
-                              recipeCategory: docs
-                                  .elementAt(index)
-                                  .data()['Category']
-                                  .toString(),
+                              document: docs[index],
                             );
                           },
                           staggeredTileBuilder: (index) => StaggeredTile.extent(

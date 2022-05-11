@@ -22,7 +22,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   late String email;
-  bool showSpinner = false;
+  bool showSpinner = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TapGestureRecognizer _tapGestureRecognizer;
 
@@ -43,85 +43,82 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    KLarger,
-                    HeaderText(
-                      headerTextString: 'Forgot\nPassword?',
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  constantLargerWhiteHorizontalSpacing,
+                  HeaderText(
+                    headerTextString: 'Forgot\nPassword?',
+                  ),
+                  constantLargerWhiteHorizontalSpacing,
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Enter email',
+                      prefixIcon: Highkon(icondata: FontAwesomeIcons.envelope),
                     ),
-                    KLarger,
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Enter email',
-                        prefixIcon:
-                            Highkon(icondata: FontAwesomeIcons.envelope),
+                    validator: (value) {
+                      return validateEmail(value);
+                    },
+                    onChanged: (value) {
+                      email = value;
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: '*',
+                        style: TextStyle(
+                          textBaseline: TextBaseline.alphabetic,
+                          color: constantActionColor,
+                        ),
                       ),
-                      validator: (value) {
-                        return validateEmail(value);
-                      },
-                      onChanged: (value) {
-                        email = value;
-                      },
-                    ),
-                    KSmaller,
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: '*',
-                          style: TextStyle(
-                            textBaseline: TextBaseline.alphabetic,
-                            color: KActionColor,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              'We will send you a message to reset your password',
-                          style: KRichStyle,
-                        ),
-                      ]),
-                    ),
-                    KSmaller,
-                    ActionButton(
-                      action: () async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        if (_formKey.currentState!.validate()) {
-                          try {
-                            await FirebaseAuth.instance
-                                .sendPasswordResetEmail(email: email)
-                                .then(
-                                  (value) => showMsg(context,
-                                      'Check your inbox to reset password.'),
-                                );
-                          } catch (e) {
-                            showErrorMsg(context, e.toString());
-                          }
+                      TextSpan(
+                        text:
+                            'We will send you a message to reset your password',
+                        style: constantRichStyle,
+                      ),
+                    ]),
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  ActionButton(
+                    dontHideActionText: showSpinner,
+                    action: () async {
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          await FirebaseAuth.instance
+                              .sendPasswordResetEmail(email: email)
+                              .then(
+                                (value) => showMsg(context,
+                                    'Check your inbox to reset password.'),
+                              );
+                        } catch (e) {
+                          showErrorMsg(context, e.toString());
                         }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      },
-                      actionString: 'Send Code',
-                    ),
-                    KSmaller,
-                    RichTexts(
-                      suggestion: '',
-                      suggestionAction: 'Go back!',
-                      suggestionActionRoute: Login.id,
-                      tapGestureRecognizer: _tapGestureRecognizer,
-                    ),
-                  ],
-                ),
+                      }
+                      setState(() {
+                        showSpinner = true;
+                      });
+                    },
+                    actionString: 'Send Code',
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichTexts(
+                    suggestion: '',
+                    suggestionAction: 'Go back!',
+                    suggestionActionRoute: Login.id,
+                    tapGestureRecognizer: _tapGestureRecognizer,
+                  ),
+                ],
               ),
             ),
           ),

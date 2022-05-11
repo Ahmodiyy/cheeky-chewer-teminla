@@ -25,7 +25,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool _obscureText = true;
-  bool showSpinner = false;
+  bool showSpinner = true;
   late TapGestureRecognizer _tapGestureRecognizerForgotPassword;
   late TapGestureRecognizer _tapGestureRecognizerSignIn;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -56,107 +56,104 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    KLarger,
-                    HeaderText(
-                      headerTextString: 'Welcome\nback!',
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  constantLargerWhiteHorizontalSpacing,
+                  HeaderText(
+                    headerTextString: 'Welcome\nback!',
+                  ),
+                  constantLargerWhiteHorizontalSpacing,
+                  TextFormField(
+                    controller: email,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Email Address',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.user,
+                      ),
                     ),
-                    KLarger,
-                    TextFormField(
-                      controller: email,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Email Address',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.user,
+                    validator: (value) {
+                      return validateEmail(value);
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  TextFormField(
+                    controller: password,
+                    obscureText: _obscureText,
+                    keyboardType: TextInputType.text,
+                    decoration: constantTextFieldDecoration.copyWith(
+                      hintText: 'Password',
+                      prefixIcon: Highkon(
+                        icondata: FontAwesomeIcons.lock,
+                      ),
+                      suffixIcon: InkWell(
+                        onTap: _toggle,
+                        child: Icon(
+                          _obscureText
+                              ? FontAwesomeIcons.eye
+                              : FontAwesomeIcons.eyeSlash,
+                          size: 15.0,
+                          color: const Color(0xffF6AB36),
                         ),
                       ),
-                      validator: (value) {
-                        return validateEmail(value);
-                      },
                     ),
-                    KSmaller,
-                    TextFormField(
-                      controller: password,
-                      obscureText: _obscureText,
-                      keyboardType: TextInputType.text,
-                      decoration: KTextFieldDecoration.copyWith(
-                        hintText: 'Password',
-                        prefixIcon: Highkon(
-                          icondata: FontAwesomeIcons.lock,
-                        ),
-                        suffixIcon: InkWell(
-                          onTap: _toggle,
-                          child: Icon(
-                            _obscureText
-                                ? FontAwesomeIcons.eye
-                                : FontAwesomeIcons.eyeSlash,
-                            size: 15.0,
-                            color: const Color(0xffF6AB36),
+                    validator: (value) {
+                      return validatePassword(value);
+                    },
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            recognizer: _tapGestureRecognizerForgotPassword
+                              ..onTap = () {
+                                Navigator.pushNamed(context, ForgotPassword.id);
+                              },
+                            text: 'Forgot Password?',
+                            style: constantRichStyleUnderline,
                           ),
-                        ),
-                      ),
-                      validator: (value) {
-                        return validatePassword(value);
-                      },
-                    ),
-                    KSmaller,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              recognizer: _tapGestureRecognizerForgotPassword
-                                ..onTap = () {
-                                  Navigator.pushNamed(
-                                      context, ForgotPassword.id);
-                                },
-                              text: 'Forgot Password?',
-                              style: KRichStyleUnderline,
-                            ),
-                          ]),
-                        )
-                      ],
-                    ),
-                    KLarger,
-                    ActionButton(
-                      action: () async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        if (_formKey.currentState!.validate()) {
-                          try {
-                            await Log().login(context, email.text.trim(),
-                                password.text.trim());
-                          } catch (e) {
-                            showErrorMsg(context, e.toString());
-                          }
+                        ]),
+                      )
+                    ],
+                  ),
+                  constantLargerWhiteHorizontalSpacing,
+                  ActionButton(
+                    action: () async {
+                      setState(() {
+                        showSpinner = false;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          await Log().login(
+                              context, email.text.trim(), password.text.trim());
+                        } catch (e) {
+                          showErrorMsg(context, e.toString());
                         }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      },
-                      actionString: 'Sign in',
-                    ),
-                    KSmaller,
-                    RichTexts(
-                      suggestion: 'Don\'t have an account? ',
-                      suggestionAction: 'Sign up',
-                      suggestionActionRoute: Register.id,
-                      tapGestureRecognizer: _tapGestureRecognizerSignIn,
-                    ),
-                  ],
-                ),
+                      }
+                      setState(() {
+                        showSpinner = true;
+                      });
+                    },
+                    actionString: 'Sign in',
+                    dontHideActionText: showSpinner,
+                  ),
+                  constantSmallerHorizontalSpacing,
+                  RichTexts(
+                    suggestion: 'Don\'t have an account? ',
+                    suggestionAction: 'Sign up',
+                    suggestionActionRoute: Register.id,
+                    tapGestureRecognizer: _tapGestureRecognizerSignIn,
+                  ),
+                ],
               ),
             ),
           ),
