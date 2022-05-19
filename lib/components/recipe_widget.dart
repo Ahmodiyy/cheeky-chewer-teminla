@@ -53,10 +53,7 @@ class Recipe extends StatelessWidget {
                 ),
                 child: Text(
                   document.data()['Duration'].toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                  ),
+                  style: constantStyleRecipeDurationAndCategory,
                 ),
               ),
             ),
@@ -71,10 +68,7 @@ class Recipe extends StatelessWidget {
                 ),
                 child: Text(
                   document.data()['Category'].toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                  ),
+                  style: constantStyleRecipeDurationAndCategory,
                 ),
               ),
             ),
@@ -100,10 +94,7 @@ class Recipe extends StatelessWidget {
               child: FittedBox(
                 child: Text(
                   document.data()['Type'].toString(),
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xffCBC5BC),
-                  ),
+                  style: constantStyleRecipeType,
                 ),
               ),
             ),

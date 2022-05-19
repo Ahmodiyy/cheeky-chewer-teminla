@@ -77,6 +77,28 @@ const constantIngredientWhiteHorizontalSpacing = SizedBox(
   height: 15,
 );
 
+const constantStyleRecipeDurationAndCategory = TextStyle(
+  color: Colors.white,
+  fontSize: 10,
+);
+
+const constantStyleRecipeNameForIngredient = TextStyle(
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+  fontSize: 20,
+);
+
+const constantStyleRecipeDurationAndCategoryForIngredient = TextStyle(
+  color: Colors.black87,
+);
+const constantStyleRecipeType = TextStyle(
+  fontSize: 10,
+  color: Color(0xffCBC5BC),
+);
+const constantStyleRecipeTypeForIngredient = TextStyle(
+  color: Color(0xffCBC5BC),
+);
+
 const constantCurvedContainerBoxDecoration = BoxDecoration(
   color: Colors.white,
   borderRadius: BorderRadius.only(
@@ -85,4 +107,11 @@ const constantCurvedContainerBoxDecoration = BoxDecoration(
     ),
     topRight: Radius.circular(20),
   ),
+);
+
+const constantHorizontalSizedBoxTen = SizedBox(
+  height: 10,
+);
+const constantHorizontalSizedBoxFifteen = SizedBox(
+  height: 15,
 );

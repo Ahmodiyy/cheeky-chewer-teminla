@@ -5,11 +5,9 @@ import 'package:cheeky_chewer/models/log.dart';
 import 'package:cheeky_chewer/utilities/constants.dart';
 import 'package:cheeky_chewer/utilities/functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
 
 class Info extends StatefulWidget {
   static String id = 'info';

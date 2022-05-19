@@ -1,7 +1,7 @@
 import 'package:cheeky_chewer/components/action_button_widget.dart';
 import 'package:cheeky_chewer/components/rating_widget.dart';
+import 'package:cheeky_chewer/screens/recipe_instruction.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constants.dart';
@@ -72,29 +72,58 @@ class Ingredient extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 2,
-                      child: Container(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 10,
+                        ),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    RatingWidget(
-                                      rating:
-                                          document.data()['Rating'].toString(),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    returningRecipeInfoWidget(
-                                      document.data()['Info'].toString(),
-                                    ),
-                                  ],
+                                RatingWidget(
+                                  rating: document.data()['Rating'].toString(),
                                 ),
                               ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                returningRecipeInfoWidget(
+                                  document.data()['Info'].toString(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Expanded(
+                              child: FittedBox(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      document.data()['Name'].toString(),
+                                      style:
+                                          constantStyleRecipeNameForIngredient,
+                                    ),
+                                    Text(
+                                      document.data()['Type'].toString(),
+                                      style:
+                                          constantStyleRecipeTypeForIngredient,
+                                    ),
+                                    Text(
+                                      '${document.data()['Category'].toString()} . ${document.data()['Duration'].toString()}',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                           ],
                         ),
@@ -108,12 +137,13 @@ class Ingredient extends StatelessWidget {
                 flex: 4,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Color(0xffF8BC5E),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          20,
-                        ),
-                      )),
+                    color: Color(0xffF8BC5E),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        20,
+                      ),
+                    ),
+                  ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: ingredientColumnPadding,
@@ -135,6 +165,27 @@ class Ingredient extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                            ),
+                            child: Container(
+                              child: Scrollbar(
+                                thickness: 7,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: 10,
+                                  itemBuilder: (context, index) {
+                                    return Text(
+                                      '.  ${document.data()['Ingredient'][index].toString()} ',
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -143,7 +194,13 @@ class Ingredient extends StatelessWidget {
               constantIngredientWhiteHorizontalSpacing,
               ActionButton(
                   actionString: 'ViewRecipe',
-                  action: () {},
+                  action: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              RecipeInstruction(document),
+                        ),
+                      ),
                   dontHideActionText: true),
               constantIngredientWhiteHorizontalSpacing,
             ],

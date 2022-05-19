@@ -1,4 +1,5 @@
 import 'package:cheeky_chewer/screens/Homepage.dart';
+import 'package:cheeky_chewer/screens/recipe_instruction.dart';
 import 'package:cheeky_chewer/screens/search.dart';
 import 'package:cheeky_chewer/screens/forgot_password.dart';
 import 'package:cheeky_chewer/screens/info.dart';
@@ -35,6 +36,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: AppBarTheme(),
         scaffoldBackgroundColor: constantAppColorTheme,
+        scrollbarTheme: ScrollbarThemeData(
+          crossAxisMargin: 5,
+          interactive: true,
+          isAlwaysShown: true,
+          showTrackOnHover: true,
+          trackVisibility: MaterialStateProperty.all(true),
+          trackColor: MaterialStateProperty.all(
+            Color(0xffCB9B4F),
+          ),
+          thumbColor: MaterialStateProperty.all(
+            Color(0xff705832),
+          ),
+        ),
       ),
       initialRoute: showHome ? Register.id : OnboardScreen.id,
       routes: {
