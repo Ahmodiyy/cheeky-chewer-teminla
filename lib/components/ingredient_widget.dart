@@ -159,10 +159,7 @@ class Ingredient extends StatelessWidget {
                           ),
                           child: Text(
                             'Ingredients',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: constantIngredientTextStyle,
                           ),
                         ),
                         Expanded(
@@ -175,7 +172,9 @@ class Ingredient extends StatelessWidget {
                                 thickness: 7,
                                 child: ListView.builder(
                                   scrollDirection: Axis.vertical,
-                                  itemCount: 10,
+                                  itemCount:
+                                      List.from(document.data()['Ingredient'])
+                                          .length,
                                   itemBuilder: (context, index) {
                                     return Text(
                                       '.  ${document.data()['Ingredient'][index].toString()} ',

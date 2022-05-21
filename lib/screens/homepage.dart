@@ -140,18 +140,19 @@ class _HomepageState extends State<Homepage> {
                         return SizedBox(
                           height: hoizontalListViewHeight,
                           child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return RecentRecipe(
-                                  document: docs[index],
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(
-                                  width: 20,
-                                );
-                              },
-                              itemCount: snapshot.data!.docs.length),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return RecentRecipe(
+                                document: docs[index],
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                width: 20,
+                              );
+                            },
+                            itemCount: snapshot.data!.docs.length,
+                          ),
                         );
                       } else {
                         return SizedBox(

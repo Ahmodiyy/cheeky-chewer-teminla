@@ -115,3 +115,7 @@ const constantHorizontalSizedBoxTen = SizedBox(
 const constantHorizontalSizedBoxFifteen = SizedBox(
   height: 15,
 );
+const constantIngredientTextStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w600,
+);

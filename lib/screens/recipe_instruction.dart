@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,6 +20,7 @@ class RecipeInstruction extends StatefulWidget {
 }
 
 class _RecipeInstructionState extends State<RecipeInstruction> {
+  final double mainPadding = 20;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,10 +66,10 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                   ),
                   Positioned(
                     top: 210,
-                    left: 20,
-                    right: 20,
+                    left: mainPadding,
+                    right: mainPadding,
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(mainPadding),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(
@@ -148,10 +150,62 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-              Text('kjdkajf'),
+              Container(
+                margin: EdgeInsets.only(
+                  top: 180,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: mainPadding + 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ingredients',
+                      style: constantIngredientTextStyle,
+                    ),
+                    constantHorizontalSizedBoxTen,
+                    Padding(
+                      padding: EdgeInsets.only(left: mainPadding),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: returningListTextWidgets(
+                          List.from(widget.document.data()['Ingredient'])
+                              .length,
+                          List.from(widget.document.data()['Ingredient']),
+                          false,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'Instructions',
+                      style: constantIngredientTextStyle,
+                    ),
+                    constantHorizontalSizedBoxTen,
+                    Padding(
+                      padding: EdgeInsets.only(left: mainPadding),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: returningListTextWidgets(
+                          List.from(widget.document.data()['Instruction'])
+                              .length,
+                          List.from(widget.document.data()['Instruction']),
+                          true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

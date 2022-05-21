@@ -71,3 +71,13 @@ Container returningRecipeInfoWidget(String recipeInfo) {
     child: Text(recipeInfo),
   );
 }
+
+List<Widget> returningListTextWidgets(
+    int numbersOfItems, List<String> listItems, bool orderedList) {
+  List<Widget> textWidgets = [];
+  for (int holdIndex = 0; holdIndex < numbersOfItems; holdIndex++) {
+    textWidgets.add(Text(
+        '${orderedList ? '${holdIndex + 1}. ' : '. '} ${listItems[holdIndex]}'));
+  }
+  return textWidgets;
+}
