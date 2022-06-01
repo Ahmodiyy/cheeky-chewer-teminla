@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../components/highkon_button.dart';
@@ -21,6 +22,8 @@ class RecipeInstruction extends StatefulWidget {
 
 class _RecipeInstructionState extends State<RecipeInstruction> {
   final double mainPadding = 20;
+  bool recipeLiked = false;
+  bool recipeDisLiked = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,24 +51,31 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                 clipBehavior: Clip.none,
                 children: [
                   Container(
-                    height: 250,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          widget.document.data()['ImageUrl'].toString(),
+                    height: 400,
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 250,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            widget.document.data()['ImageUrl'].toString(),
+                          ),
+                          fit: BoxFit.cover,
                         ),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 210,
+                    bottom: 5,
                     left: mainPadding,
                     right: mainPadding,
                     child: Container(
@@ -124,27 +134,57 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                             ),
                           ),
                           Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                HighkonButton(
-                                  iconData: FontAwesomeIcons.thumbsUp,
-                                  clickFunction: () {},
-                                ),
-                                constantHorizontalSizedBoxFifteen,
-                                HighkonButton(
-                                  iconData: FontAwesomeIcons.thumbsDown,
-                                  clickFunction: () {},
-                                ),
-                                constantHorizontalSizedBoxFifteen,
-                                HighkonButton(
-                                  iconContainerSize: 42,
-                                  iconBackgroundColor: constantActionColor,
-                                  iconColor: Colors.white,
-                                  iconData: FontAwesomeIcons.shareAlt,
-                                  clickFunction: () {},
-                                ),
-                              ],
+                            child: StatefulBuilder(
+                              builder: (BuildContext context,
+                                  void Function(void Function()) setState) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    HighkonButton(
+                                      iconBackgroundColor: recipeLiked
+                                          ? constantActionColor
+                                          : Colors.white,
+                                      iconColor: recipeLiked
+                                          ? Colors.white
+                                          : constantActionColor,
+                                      iconData: FontAwesomeIcons.thumbsUp,
+                                      clickFunction: () {
+                                        setState(() {
+                                          print('llllllllll');
+                                          recipeLiked = true;
+                                          recipeDisLiked = false;
+                                        });
+                                      },
+                                    ),
+                                    constantHorizontalSizedBoxFifteen,
+                                    HighkonButton(
+                                      iconBackgroundColor: recipeDisLiked
+                                          ? constantActionColor
+                                          : Colors.white,
+                                      iconColor: recipeDisLiked
+                                          ? Colors.white
+                                          : constantActionColor,
+                                      iconData: FontAwesomeIcons.thumbsDown,
+                                      clickFunction: () {
+                                        setState(() {
+                                          print('sssssssssssssss');
+                                          recipeDisLiked = true;
+                                          recipeLiked = false;
+                                        });
+                                      },
+                                    ),
+                                    constantHorizontalSizedBoxFifteen,
+                                    HighkonButton(
+                                      iconContainerSize: 42,
+                                      iconBackgroundColor: constantActionColor,
+                                      iconColor: Colors.white,
+                                      iconData: FontAwesomeIcons.shareAlt,
+                                      clickFunction: () {},
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -154,10 +194,10 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(
-                  top: 180,
+                margin: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.symmetric(
+                  horizontal: mainPadding + 5,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: mainPadding + 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -168,15 +208,34 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                     constantHorizontalSizedBoxTen,
                     Padding(
                       padding: EdgeInsets.only(left: mainPadding),
-                      child: ListView(
+                      child: ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        children: returningListTextWidgets(
-                          List.from(widget.document.data()['Ingredient'])
-                              .length,
-                          List.from(widget.document.data()['Ingredient']),
-                          false,
-                        ),
+                        itemCount:
+                            List.from(widget.document.data()['Ingredient'])
+                                .length,
+                        itemBuilder: (buildContent, index) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '. ',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${widget.document.data()['Ingredient'][index]}',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                     SizedBox(
@@ -189,15 +248,30 @@ class _RecipeInstructionState extends State<RecipeInstruction> {
                     constantHorizontalSizedBoxTen,
                     Padding(
                       padding: EdgeInsets.only(left: mainPadding),
-                      child: ListView(
+                      child: ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        children: returningListTextWidgets(
-                          List.from(widget.document.data()['Instruction'])
-                              .length,
-                          List.from(widget.document.data()['Instruction']),
-                          true,
-                        ),
+                        itemCount:
+                            List.from(widget.document.data()['Instruction'])
+                                .length,
+                        itemBuilder: (buildContent, index) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${index + 1}. '),
+                              Expanded(
+                                child: Text(
+                                  '${widget.document.data()['Instruction'][index]}',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    wordSpacing: 2,
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ],

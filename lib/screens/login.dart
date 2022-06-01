@@ -7,11 +7,11 @@ import 'package:cheeky_chewer/screens/forgot_password.dart';
 import 'package:cheeky_chewer/screens/register.dart';
 import 'package:cheeky_chewer/utilities/constants.dart';
 import 'package:cheeky_chewer/utilities/functions.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
 
 import 'forgot_password.dart';
 
@@ -134,7 +134,10 @@ class _LoginState extends State<Login> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           await Log().login(
-                              context, email.text.trim(), password.text.trim());
+                            context,
+                            email.text.trim(),
+                            password.text.trim(),
+                          );
                         } catch (e) {
                           showErrorMsg(context, e.toString());
                         }

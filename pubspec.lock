@@ -247,10 +247,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  modal_progress_hud_alt:
-    dependency: "direct main"
+  nested:
+    dependency: transitive
     description:
-      name: modal_progress_hud_alt
+      name: nested
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
@@ -310,6 +310,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.3"
   shared_preferences:
     dependency: "direct main"
     description:

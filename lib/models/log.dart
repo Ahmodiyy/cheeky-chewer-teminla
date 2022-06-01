@@ -60,8 +60,7 @@ class Log {
     }
   }
 
-  Future<void> login(
-      BuildContext context, String email, String password) async {
+  login(BuildContext context, String email, String password) {
     try {
       _firebaseAuth
           .signInWithEmailAndPassword(

@@ -169,7 +169,7 @@ class Ingredient extends StatelessWidget {
                             ),
                             child: Container(
                               child: Scrollbar(
-                                thickness: 7,
+                                thickness: 5,
                                 child: ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   itemCount:
@@ -178,6 +178,9 @@ class Ingredient extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return Text(
                                       '.  ${document.data()['Ingredient'][index].toString()} ',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                     );
                                   },
                                 ),

@@ -25,7 +25,7 @@ class _SearchState extends State<Search> {
 
   void getData() {
     setState(() {
-      recipeData = RecipeData.getRecipeCollection(context);
+      recipeData = RecipeData().getRecipeCollection(context);
     });
   }
 
