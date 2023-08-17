@@ -1,16 +1,6 @@
 # cheeky_chewer
 
-A new Flutter project.
+A simple and elegant way to show off, share and discuss your recipes with others. Built with flutter and firebase.  
+NOTE: THIS PROJECT WAS DISCONTINUED.  
+![cheeky chewer](https://github.com/Ahmodiyy/cheeky-chewer-teminla/assets/61211517/1169c5ba-4864-4135-ba9a-73322f1fa5ea)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
